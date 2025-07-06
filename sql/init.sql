@@ -1,0 +1,26 @@
+CREATE DATABASE IF NOT EXISTS smart_dashboard CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE smart_dashboard;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'user') DEFAULT 'user'
+);
+
+CREATE TABLE IF NOT EXISTS devices (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  ipAddress VARCHAR(15) NOT NULL,
+  location VARCHAR(100),
+  lastUpdated DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS deviceStats (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  deviceId INT,
+  trafficUsage INT,
+  healthScore INT,
+  recordedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (deviceId) REFERENCES devices(id)
+);
