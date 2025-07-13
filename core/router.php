@@ -1,5 +1,5 @@
 <?php
-class Router {
+class router {
     public static function route($uri) {
         $parts = explode('/', trim($uri, '/'));
         $controllerName = !empty($parts[0]) ? $parts[0] . 'controller' : 'homeController';
