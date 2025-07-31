@@ -22,3 +22,10 @@ Smart Network Dashboard 是一套全端網路監控儀表板 Side Project，採 
 - .env 不進 git，請本機複製 .env.example 自行設定
 - storage/logs, storage/framework/cache/data 資料夾需本機先建立
 - 分支命名皆使用小駝峰
+
+## Docker 快速啟動
+1. 複製 backend/.env.sample 為 backend/.env，檢查資料庫連線資訊
+2. 執行 `docker compose up --build`
+3. 第一次啟動會自動安裝 composer、產生 key、migrate 資料庫
+4. 服務啟動後，Laravel API 可由 [http://localhost:8000](http://localhost:8000) 存取
+5. 資料庫可由本機 33060 port 連接，帳密為 root / secret
