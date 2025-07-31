@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: dashboard_backend
+    build:
+      context: ./backend
+    image: dashboard_backend:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - ./backend/storage:/var/www/storage
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=dashboard
+      - DB_USERNAME=root
+      - DB_PASSWORD=secret
+    depends_on:
+      - db
+    command: >
+      sh -c "composer install &&
+             php artisan key:generate &&
+             php artisan migrate &&
+             php artisan serve --host=0.0.0.0 --port=8000"
+
+  db:
+    image: mysql:8
+    container_name: dashboard_db
+    restart: unless-stopped
+    ports:
+      - "33060:3306"
+    environment:
+      MYSQL_DATABASE: dashboard
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
