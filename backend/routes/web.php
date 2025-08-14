@@ -8,7 +8,7 @@ Route::get('/', function () {
 
 // API Health Check
 Route::get('/ping', function () {
-    return response()->json(['pong' => true]);
+    return response('pong', 200);
 });
 
 // 其它 API 直接加在這裡
